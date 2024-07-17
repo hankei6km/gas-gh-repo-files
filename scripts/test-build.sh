@@ -1,7 +1,7 @@
-#!/bin\bash
+#!/bin/bash
 set -e
 
-BASENAME="md2html"
+BASENAME="gh-repo-files-to-html"
 
 # ビルドされたコードにテスト用のコードを結合する.
 # ビルドされたコードはエクスポートされていないための対応.

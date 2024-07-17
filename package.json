@@ -1,19 +1,19 @@
 {
-  "name": "@hankei6km/my-starter-gas-lib-ts",
-  "version": "0.13.0",
-  "description": "My Starter to make Google Apps Script library by using TypeScript",
+  "name": "@hankei6km/gas-gh-repo-files-to-html",
+  "version": "0.0.0",
+  "description": "GitHub 上のリポジトリからファイル一覧を取得し HTML へ書き出す",
   "author": "hankei6km <hankei6km@gmail.com> (https://github.com/hankei6km)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hankei6km/gas-md2html.git"
+    "url": "git://github.com/hankei6km/gas-gh-repo-files-to-html.git"
   },
   "bugs": {
-    "url": "https://github.com/hankei6km/gas-md2html/issues"
+    "url": "https://github.com/hankei6km/gas-gh-repo-files-to-html/issues"
   },
   "keywords": [
     "gas",
-    "markdown",
+    "github",
     "html"
   ],
   "files": [
@@ -39,11 +39,7 @@
   "dependencies": {
     "hast-util-raw": "^9.0.2",
     "hast-util-sanitize": "^5.0.1",
-    "hast-util-to-html": "^9.0.1",
-    "mdast-util-from-markdown": "^2.0.0",
-    "mdast-util-gfm": "^3.0.0",
-    "mdast-util-to-hast": "^13.1.0",
-    "micromark-extension-gfm": "^3.0.0"
+    "hast-util-to-html": "^9.0.1"
   },
   "devDependencies": {
     "@hankei6km/files-to-licenses": "^0.1.1",

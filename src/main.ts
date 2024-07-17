@@ -1,1 +1,1 @@
-export { MD2html } from './md2html.js'
+export { GhRepoFilesToHtml } from './gh-repo-files-to-html.js'

@@ -2,7 +2,7 @@
 set -e
 
 NAMESPACE="MD2html"
-BASENAME="md2html"
+BASENAME="gh-repo-files-to-html"
 
 BUILD_DIR="build"
 # esbuild でビルドされた結果(定義は "esbuild.config.mjs" でされている).
