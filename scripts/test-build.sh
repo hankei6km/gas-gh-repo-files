@@ -5,4 +5,4 @@ BASENAME="gh-repo-files-to-html"
 
 # ビルドされたコードにテスト用のコードを結合する.
 # ビルドされたコードはエクスポートされていないための対応.
-cat "test/build/${BASENAME}_src.js" "build/${BASENAME}".js > "test/build/${BASENAME}.spec.js"
+cat "build/${BASENAME}".js "test/build/${BASENAME}_src.js" > "test/build/${BASENAME}.spec.js"
