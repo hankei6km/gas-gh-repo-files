@@ -1,5 +1,5 @@
 describe('exported', () => {
-  class SimpleClient extends GasClient {
+  class SimpleClient extends getGasClient() {
     //fetch(_opts) {
     //  return new Uint8Array([])
     //}
