@@ -1,0 +1,134 @@
+import * as fs from 'node:fs/promises'
+import type JSZip from 'jszip'
+import { Client } from '../../src/lib/client.js'
+import type { ClientOpts } from '../../src/lib/client.js'
+import { TextEncoder } from 'util'
+
+class SimpleClient extends Client {
+  protected fetch(_opts: ClientOpts) {
+    return fs.readFile('test/assets/test.zip')
+  }
+}
+
+function mockZipObject(name: string, data?: Uint8Array): JSZip.JSZipObject {
+  return {
+    name,
+    async: async (_type: string) => {
+      return data || new Uint16Array()
+    }
+  } as any
+}
+
+describe('Client', () => {
+  it('info', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    expect(client.info).toBe(
+      'owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com'
+    )
+  })
+  it('info(上書き)', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html',
+      ref: 'develop',
+      host: 'github.co.jp',
+      rawContentHost: 'raw.github.co.jp'
+    })
+    expect(client.info).toBe(
+      'owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: develop, host: github.co.jp, rawContentHost: raw.github.co.jp'
+    )
+  })
+  it('documentName', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    expect(client.documentName).toBe('hankei6km gas-gh-repo-files-to-html main')
+  })
+  it('title', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    expect(client.title).toBe('hankei6km/gas-gh-repo-files-to-html/main')
+  })
+  it('fileKind(image)', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    await expect(
+      (client as any).fileKind(mockZipObject('path/to/test.png')) // protected なので as any
+    ).resolves.toBe('image')
+  })
+  it('fileKind(binary)', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    await expect(
+      (client as any).fileKind(
+        mockZipObject('path/to/test', new Uint8Array([0x1f, 0x8b])) // gzip magic number
+      ) // protected なので as any
+    ).resolves.toBe('binary')
+  })
+  it('fileKind(source)', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    await expect(
+      (client as any).fileKind(
+        mockZipObject(
+          'path/to/test.txt',
+          new Uint8Array(new TextEncoder().encode('あいうえお')) // hiragana(あいうえお)
+        )
+      ) // protected なので as any
+    ).resolves.toBe('source')
+  })
+  it('rawUrl', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    expect((client as any).rawUrl('path/to/test.png')).toBe(
+      'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/path/to/test.png'
+    )
+  })
+  it('getFileList', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    const ret = await client.getFileList()
+    expect(ret.length).toBe(3)
+    expect(ret).toEqual(
+      expect.arrayContaining([
+        {
+          name: 'README.txt',
+          kind: 'source',
+          content: 'テストに使う zip に追加されるディレクトリ\n',
+          rawUrl:
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/README.txt'
+        },
+        {
+          name: 'test.bin',
+          kind: 'binary',
+          content: '',
+          rawUrl:
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/test.bin'
+        },
+        {
+          name: 'images/hiragana.png',
+          kind: 'image',
+          content: '',
+          rawUrl:
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/images/hiragana.png'
+        }
+      ])
+    )
+  })
+})

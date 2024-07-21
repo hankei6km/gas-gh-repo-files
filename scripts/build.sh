@@ -8,6 +8,7 @@ BUILD_DIR="build"
 # esbuild でビルドされた結果(定義は "esbuild.config.mjs" でされている).
 OUT_MAIN="${BUILD_DIR}/main.js"
 # 上記ファイルに結合して Apps Scpirt で参照できるようにするファイル.
+SRC_INDEX_BANNER="src/index_banner.js"
 SRC_INDEX="src/index.js"
 
 # Apps Scipt へ push する用.
@@ -16,7 +17,7 @@ SRC_INDEX="src/index.js"
 node esbuild.config.mjs
 tsc --emitDeclarationOnly --declaration --project ./tsconfig.build.json
 # App Script で参照できるようにするファイルと結合.
-cat "${SRC_INDEX}" "${OUT_MAIN}" > "${BUILD_DIR}/${BASENAME}.js"
+cat "${SRC_INDEX_BANNER}" "${OUT_MAIN}" "${SRC_INDEX}" > "${BUILD_DIR}/${BASENAME}.js"
 
 # Assets に含める LICENSE ファイルをコピー.
 cp LICENSE "${BUILD_DIR}/LICENSE.txt"
