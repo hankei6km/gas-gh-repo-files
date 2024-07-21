@@ -16,7 +16,10 @@ function setImmediate(callback, ...args) {
   return {}
 }
 
-class GasClient extends _entry_point_.GhRepoFilesToHtml.GasClient {}
+function getGasClient() {
+  return _entry_point_.GhRepoFilesToHtml.GasClient
+}
+// class GasClient extends _entry_point_.GhRepoFilesToHtml.GasClient {} // これは GAS でロードときに _entry_point_ がないのでエスポートされない。たぶん。
 
 function filesToHtml(client, opts) {
   return _entry_point_.GhRepoFilesToHtml.filesToHtml(client, opts)
