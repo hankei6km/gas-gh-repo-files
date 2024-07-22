@@ -75,4 +75,15 @@ describe('GhRepoFilesToHtml.toHtml()', () => {
 </code></pre><h3>test.bin</h3><p>binary</p></div>"
 `)
   })
+  it('should return html(description)', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    client.description = 'test'
+    expect(await GhRepoFilesToHtml.filesToHtml(client)).toMatchInlineSnapshot(`
+"<div><h1>hankei6km/gas-gh-repo-files-to-html/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><p>test</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
+</code></pre><h3>test.bin</h3><p>binary</p></div>"
+`)
+  })
 })

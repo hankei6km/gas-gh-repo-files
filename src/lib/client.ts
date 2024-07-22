@@ -35,6 +35,7 @@ export type FileKind = 'source' | 'image' | 'binary'
 
 export abstract class Client {
   protected _opts: ClientNomalizedOpts
+  protected _description: string | undefined = ''
   constructor(opts: ClientOpts) {
     this._opts = normalizeClientOpts(opts)
   }
@@ -47,6 +48,12 @@ export abstract class Client {
   }
   get title(): string {
     return `${this._opts.owner}/${this._opts.repo}/${this._opts.ref}`
+  }
+  set description(_description: string | undefined) {
+    this._description = _description
+  }
+  get description(): string | undefined {
+    return this._description
   }
   protected async fileKind(zipObj: JSZip.JSZipObject): Promise<FileKind> {
     const filepath = zipObj.name

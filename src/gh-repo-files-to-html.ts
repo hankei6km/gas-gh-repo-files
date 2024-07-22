@@ -54,11 +54,18 @@ export namespace GhRepoFilesToHtml {
         children.push(h('p', 'binary'))
       }
     }
+    const description = (() => {
+      if (client.description) {
+        return [h('p', client.description)]
+      }
+      return []
+    })()
     return hastToHtml(
       sanitize(
         h('div', [
           h('h1', client.title),
           h('p', client.info),
+          ...description,
           h('h2', 'files'),
           ...children
         ]),
