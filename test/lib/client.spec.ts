@@ -55,6 +55,15 @@ describe('Client', () => {
     })
     expect(client.title).toBe('hankei6km/gas-gh-repo-files-to-html/main')
   })
+  it('desciption', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files-to-html'
+    })
+    expect(client.description).toBe('')
+    client.description = 'test'
+    expect(client.description).toBe('test')
+  })
   it('fileKind(image)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
