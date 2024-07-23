@@ -15,7 +15,7 @@ export function isErrRes(
   return false
 }
 
-export namespace GhRepoFilesToHtml {
+export namespace GhRepoFiles {
   export class GasClient extends Client {
     protected async fetch(): Promise<Uint8Array> {
       const url = new Url('')

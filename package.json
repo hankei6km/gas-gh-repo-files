@@ -1,15 +1,15 @@
 {
-  "name": "@hankei6km/gas-gh-repo-files-to-html",
+  "name": "@hankei6km/gas-gh-repo-files",
   "version": "0.0.0",
-  "description": "GitHub 上のリポジトリからファイル一覧を取得し HTML へ書き出す",
+  "description": "GitHub 上のリポジトリのファイル一覧",
   "author": "hankei6km <hankei6km@gmail.com> (https://github.com/hankei6km)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/hankei6km/gas-gh-repo-files-to-html.git"
+    "url": "git://github.com/hankei6km/gas-gh-repo-files.git"
   },
   "bugs": {
-    "url": "https://github.com/hankei6km/gas-gh-repo-files-to-html/issues"
+    "url": "https://github.com/hankei6km/gas-gh-repo-files/issues"
   },
   "keywords": [
     "gas",
@@ -32,7 +32,7 @@
     "push": "bash scripts/clasp-with-auth.sh push --force",
     "deploy": "bash scripts/clasp-with-auth.sh deploy",
     "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "pretest":"bash scripts/make-test-zip.sh",
+    "pretest": "bash scripts/make-test-zip.sh",
     "test:build": "npm run clean:test && npm run build && bash scripts/test-build.sh && npm run test",
     "posttest:build": "npm run clean:test",
     "lint:type-check": "tsc --noEmit"

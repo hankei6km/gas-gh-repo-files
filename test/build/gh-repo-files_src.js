@@ -10,7 +10,7 @@ describe('exported', () => {
           kind: 'image',
           content: '',
           rawUrl:
-            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/images/hiragana.png'
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png'
         }
       ]
     }
@@ -18,7 +18,7 @@ describe('exported', () => {
   it('should return html', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     // expect(await toHtml(client)).toMatchInlineSnapshot() // 連結したファイルでテストするので、ここには書き戻されない。
     expect(await filesToHtml(client)).toMatchSnapshot()

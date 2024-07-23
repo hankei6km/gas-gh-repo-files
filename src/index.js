@@ -17,10 +17,10 @@ function setImmediate(callback, ...args) {
 }
 
 function getGasClient() {
-  return _entry_point_.GhRepoFilesToHtml.GasClient
+  return _entry_point_.GhRepoFiles.GasClient
 }
-// class GasClient extends _entry_point_.GhRepoFilesToHtml.GasClient {} // これは GAS でロードときに _entry_point_ がないのでエスポートされない。たぶん。
+// class GasClient extends _entry_point_.GhRepoFiles.GasClient {} // これは GAS でロードときに _entry_point_ がないのでエスポートされない。たぶん。
 
 function filesToHtml(client, opts) {
-  return _entry_point_.GhRepoFilesToHtml.filesToHtml(client, opts)
+  return _entry_point_.GhRepoFiles.filesToHtml(client, opts)
 }
