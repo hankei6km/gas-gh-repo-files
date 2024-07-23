@@ -2,9 +2,9 @@ import { jest } from '@jest/globals'
 import * as fs from 'node:fs/promises'
 import { Client } from '../src/lib/client.js'
 import type { ClientOpts, FileList } from '../src/lib/client.js'
-import { GhRepoFilesToHtml } from '../src/gh-repo-files-to-html.js'
+import { GhRepoFiles } from '../src/gh-repo-files.js'
 
-describe('GhRepoFilesToHtml.GasClient', () => {
+describe('GhRepoFiles.GasClient', () => {
   const saveUrlFetchApp = global.UrlFetchApp
   afterEach(() => {
     global.UrlFetchApp = saveUrlFetchApp
@@ -21,13 +21,13 @@ describe('GhRepoFilesToHtml.GasClient', () => {
     global.UrlFetchApp = {
       fetch: mockfetch
     } as any
-    const client = new GhRepoFilesToHtml.GasClient({
+    const client = new GhRepoFiles.GasClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     await client.getFileList()
     expect(mockfetch).toHaveBeenCalledWith(
-      'https://github.com/hankei6km/gas-gh-repo-files-to-html/archive/main.zip',
+      'https://github.com/hankei6km/gas-gh-repo-files/archive/main.zip',
       { method: 'get', muteHttpExceptions: true }
     )
   })
@@ -43,17 +43,17 @@ describe('GhRepoFilesToHtml.GasClient', () => {
     global.UrlFetchApp = {
       fetch: mockfetch
     } as any
-    const client = new GhRepoFilesToHtml.GasClient({
+    const client = new GhRepoFiles.GasClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     await expect(client.getFileList()).rejects.toThrow(
-      'GasClient#fetch 404, opts:owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com, text: {"message":"Not Found","documentation_url":"https://docs.github.com/rest"}'
+      'GasClient#fetch 404, opts:owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com, text: {"message":"Not Found","documentation_url":"https://docs.github.com/rest"}'
     )
   })
 })
 
-describe('GhRepoFilesToHtml.toHtml()', () => {
+describe('GhRepoFiles.toHtml()', () => {
   class SimpleClient extends Client {
     protected fetch(_opts: ClientOpts) {
       return fs.readFile('test/assets/test.zip')
@@ -68,21 +68,21 @@ describe('GhRepoFilesToHtml.toHtml()', () => {
   it('should return html', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
-    expect(await GhRepoFilesToHtml.filesToHtml(client)).toMatchInlineSnapshot(`
-"<div><h1>hankei6km/gas-gh-repo-files-to-html/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
+    expect(await GhRepoFiles.filesToHtml(client)).toMatchInlineSnapshot(`
+"<div><h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
 </code></pre><h3>test.bin</h3><p>binary</p></div>"
 `)
   })
   it('should return html(description)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     client.description = 'test'
-    expect(await GhRepoFilesToHtml.filesToHtml(client)).toMatchInlineSnapshot(`
-"<div><h1>hankei6km/gas-gh-repo-files-to-html/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><p>test</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
+    expect(await GhRepoFiles.filesToHtml(client)).toMatchInlineSnapshot(`
+"<div><h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><p>test</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
 </code></pre><h3>test.bin</h3><p>binary</p></div>"
 `)
   })

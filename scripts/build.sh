@@ -1,8 +1,7 @@
 #!/bin/bash
 set -e
 
-NAMESPACE="MD2html"
-BASENAME="gh-repo-files-to-html"
+BASENAME="gh-repo-files"
 
 BUILD_DIR="build"
 # esbuild でビルドされた結果(定義は "esbuild.config.mjs" でされている).

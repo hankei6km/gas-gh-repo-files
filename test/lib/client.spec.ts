@@ -23,42 +23,42 @@ describe('Client', () => {
   it('info', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     expect(client.info).toBe(
-      'owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com'
+      'owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com'
     )
   })
   it('info(上書き)', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html',
+      repo: 'gas-gh-repo-files',
       ref: 'develop',
       host: 'github.co.jp',
       rawContentHost: 'raw.github.co.jp'
     })
     expect(client.info).toBe(
-      'owner: hankei6km, repo: gas-gh-repo-files-to-html, ref: develop, host: github.co.jp, rawContentHost: raw.github.co.jp'
+      'owner: hankei6km, repo: gas-gh-repo-files, ref: develop, host: github.co.jp, rawContentHost: raw.github.co.jp'
     )
   })
   it('documentName', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
-    expect(client.documentName).toBe('hankei6km gas-gh-repo-files-to-html main')
+    expect(client.documentName).toBe('hankei6km gas-gh-repo-files main')
   })
   it('title', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
-    expect(client.title).toBe('hankei6km/gas-gh-repo-files-to-html/main')
+    expect(client.title).toBe('hankei6km/gas-gh-repo-files/main')
   })
   it('desciption', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     expect(client.description).toBe('')
     client.description = 'test'
@@ -67,7 +67,7 @@ describe('Client', () => {
   it('fileKind(image)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     await expect(
       (client as any).fileKind(mockZipObject('path/to/test.png')) // protected なので as any
@@ -76,7 +76,7 @@ describe('Client', () => {
   it('fileKind(binary)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     await expect(
       (client as any).fileKind(
@@ -87,7 +87,7 @@ describe('Client', () => {
   it('fileKind(source)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     await expect(
       (client as any).fileKind(
@@ -101,16 +101,16 @@ describe('Client', () => {
   it('rawUrl', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     expect((client as any).rawUrl('path/to/test.png')).toBe(
-      'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/path/to/test.png'
+      'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/path/to/test.png'
     )
   })
   it('getFileList', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
-      repo: 'gas-gh-repo-files-to-html'
+      repo: 'gas-gh-repo-files'
     })
     const ret = await client.getFileList()
     expect(ret.length).toBe(3)
@@ -121,21 +121,21 @@ describe('Client', () => {
           kind: 'source',
           content: 'テストに使う zip に追加されるディレクトリ\n',
           rawUrl:
-            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/README.txt'
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/README.txt'
         },
         {
           name: 'test.bin',
           kind: 'binary',
           content: '',
           rawUrl:
-            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/test.bin'
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/test.bin'
         },
         {
           name: 'images/hiragana.png',
           kind: 'image',
           content: '',
           rawUrl:
-            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files-to-html/main/images/hiragana.png'
+            'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png'
         }
       ])
     )
