@@ -1,8 +1,12 @@
 import Url from 'url-parse'
 import { h } from 'hastscript'
 import type { Child } from 'hastscript'
+import type { Nodes } from 'hast'
 import { toHtml as hastToHtml } from 'hast-util-to-html'
 import { sanitize, defaultSchema } from 'hast-util-sanitize'
+import { toMdast as hastToMdast } from 'hast-util-to-mdast'
+import { toMarkdown as mdastToMarkdown } from 'mdast-util-to-markdown'
+import { gfmToMarkdown } from 'mdast-util-gfm'
 import { Client } from './lib/client'
 
 export function isErrRes(
@@ -42,7 +46,7 @@ export namespace GhRepoFiles {
       return new Uint8Array(res.getBlob().getBytes())
     }
   }
-  export async function filesToHtml(client: Client): Promise<string> {
+  async function filesToHHast(client: Client): Promise<Nodes> {
     const children: Child = []
     for (const o of await client.getFileList()) {
       children.push(h('h3', o.name))
@@ -60,17 +64,23 @@ export namespace GhRepoFiles {
       }
       return []
     })()
-    return hastToHtml(
-      sanitize(
-        h('div', [
-          h('h1', client.title),
-          h('p', client.info),
-          ...description,
-          h('h2', 'files'),
-          ...children
-        ]),
-        defaultSchema
-      )
+    return sanitize(
+      h('div', [
+        h('h1', client.title),
+        h('p', client.info),
+        ...description,
+        h('h2', 'files'),
+        ...children
+      ]),
+      defaultSchema
     )
+  }
+  export async function filesToHtml(client: Client): Promise<string> {
+    return hastToHtml(await filesToHHast(client))
+  }
+  export async function filesToMarkdown(client: Client): Promise<string> {
+    return mdastToMarkdown(hastToMdast(await filesToHHast(client)), {
+      extensions: [gfmToMarkdown()]
+    })
   }
 }

@@ -23,4 +23,12 @@ describe('exported', () => {
     // expect(await toHtml(client)).toMatchInlineSnapshot() // 連結したファイルでテストするので、ここには書き戻されない。
     expect(await filesToHtml(client)).toMatchSnapshot()
   })
+  it('should return markdown', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files'
+    })
+    // expect(await toMarkdown(client)).toMatchInlineSnapshot() // 連結したファイルでテストするので、ここには書き戻されない。
+    expect(await filesToMarkdown(client)).toMatchSnapshot()
+  })
 })

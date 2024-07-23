@@ -24,3 +24,6 @@ function getGasClient() {
 function filesToHtml(client, opts) {
   return _entry_point_.GhRepoFiles.filesToHtml(client, opts)
 }
+function filesToMarkdown(client, opts) {
+  return _entry_point_.GhRepoFiles.filesToMarkdown(client, opts)
+}
