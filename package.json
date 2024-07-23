@@ -39,11 +39,15 @@
   },
   "dependencies": {
     "chardet": "^2.0.0",
+    "hast": "^1.0.0",
     "hast-util-raw": "^9.0.2",
     "hast-util-sanitize": "^5.0.1",
     "hast-util-to-html": "^9.0.1",
+    "hast-util-to-mdast": "^10.1.0",
     "hastscript": "^9.0.0",
     "jszip": "^3.10.1",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-to-markdown": "^2.1.0",
     "mime": "^4.0.4",
     "url-parse": "^1.5.10"
   },

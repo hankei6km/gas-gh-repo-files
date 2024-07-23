@@ -119,7 +119,8 @@ describe('Client', () => {
         {
           name: 'README.txt',
           kind: 'source',
-          content: 'テストに使う zip に追加されるディレクトリ\n',
+          content:
+            "テストに使う zip に追加されるディレクトリ\n\n```html\n<p>テスト</p>\n```\n",
           rawUrl:
             'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/README.txt'
         },
