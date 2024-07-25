@@ -94,7 +94,7 @@ export abstract class Client {
    *
    * @returns {Promise<Uint8Array>} - ファイルの内容を含むPromise。
    */
-  protected abstract fetch(opts: ClientOpts): Promise<Uint8Array>
+  protected abstract fetch(): Promise<Uint8Array>
 
   /**
    * クライアントが保持する GitHub リポジトリに関する情報を返します。
@@ -188,7 +188,7 @@ export abstract class Client {
    */
   async getFileList(): Promise<FileList> {
     const ret: FileList = []
-    const data = await this.fetch(this._opts)
+    const data = await this.fetch()
     const zip = await JSZip.loadAsync(data)
     for (const o in zip.files) {
       const zipObj = zip.files[o]

@@ -5,7 +5,7 @@ import type { ClientOpts } from '../../src/lib/client.js'
 import { TextEncoder } from 'util'
 
 class SimpleClient extends Client {
-  protected fetch(_opts: ClientOpts) {
+  protected fetch() {
     return fs.readFile('test/assets/test.zip')
   }
 }
@@ -120,7 +120,7 @@ describe('Client', () => {
           name: 'README.txt',
           kind: 'source',
           content:
-            "テストに使う zip に追加されるディレクトリ\n\n```html\n<p>テスト</p>\n```\n",
+            'テストに使う zip に追加されるディレクトリ\n\n```html\n<p>テスト</p>\n```\n',
           rawUrl:
             'https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/README.txt'
         },
