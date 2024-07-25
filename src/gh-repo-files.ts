@@ -9,16 +9,6 @@ import { toMarkdown as mdastToMarkdown } from 'mdast-util-to-markdown'
 import { gfmToMarkdown } from 'mdast-util-gfm'
 import { Client } from './lib/client'
 
-export function isErrRes(
-  res: GoogleAppsScript.URL_Fetch.HTTPResponse
-): boolean {
-  const code = Math.trunc(res.getResponseCode() / 100)
-  if (code === 4 || code === 5) {
-    return true
-  }
-  return false
-}
-
 /**
  * GitHub リポジトリのファイルを操作するためのユーティリティを提供します。
  */
@@ -31,6 +21,15 @@ export namespace GhRepoFiles {
    * GitHub リポジトリからファイルをフェッチします。
    */
   export class GasClient extends Client {
+    protected static isErrRes(
+      res: GoogleAppsScript.URL_Fetch.HTTPResponse
+    ): boolean {
+      const code = Math.trunc(res.getResponseCode() / 100)
+      if (code === 4 || code === 5) {
+        return true
+      }
+      return false
+    }
     /**
      * GitHub リポジトリからファイルを ZIP アーカイブとしてフェッチします。
      *
@@ -50,7 +49,7 @@ export namespace GhRepoFiles {
         method: 'get',
         muteHttpExceptions: true
       })
-      if (isErrRes(res)) {
+      if (GasClient.isErrRes(res)) {
         return Promise.reject(
           new Error(
             `GasClient#fetch ${res.getResponseCode()}, opts:${
