@@ -21,7 +21,9 @@ describe('exported', () => {
       repo: 'gas-gh-repo-files'
     })
     // expect(await toHtml(client)).toMatchInlineSnapshot() // 連結したファイルでテストするので、ここには書き戻されない。
-    expect(await filesToHtml(client)).toMatchSnapshot()
+    expect(await filesToHtml(client)).toEqual(
+      '<div><h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"></div>'
+    )
   })
   it('should return markdown', async () => {
     const client = new SimpleClient({
@@ -29,6 +31,16 @@ describe('exported', () => {
       repo: 'gas-gh-repo-files'
     })
     // expect(await toMarkdown(client)).toMatchInlineSnapshot() // 連結したファイルでテストするので、ここには書き戻されない。
-    expect(await filesToMarkdown(client)).toMatchSnapshot()
+    expect(await filesToMarkdown(client))
+      .toEqual(`# hankei6km/gas-gh-repo-files/main
+
+owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw\\.githubusercontent.com
+
+## files
+
+### images/hiragana.png
+
+![](https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png)
+`)
   })
 })
