@@ -3,6 +3,7 @@ set -e
 
 BASENAME="gh-repo-files"
 
+TYPES_DIR="types"
 BUILD_DIR="build"
 # esbuild でビルドされた結果(定義は "esbuild.config.mjs" でされている).
 OUT_MAIN="${BUILD_DIR}/main.js"
@@ -22,9 +23,15 @@ cat "${SRC_INDEX_BANNER}" "${OUT_MAIN}" "${SRC_INDEX}" > "${BUILD_DIR}/${BASENAM
 cp LICENSE "${BUILD_DIR}/LICENSE.txt"
 
 # 型定義から良くない方法で export を外す(モジュールにしないため)
-# index.d.ts へ移動.
-sed -e 's/^export \(declare namespace\)/\1/' -- "${BUILD_DIR}/src/${BASENAME}.d.ts" > "index.d.ts"
+# "${TYPES_DIR}"/index.d.ts へ移動.
+test -d "${TYPES_DIR}" || mkdir -p "${TYPES_DIR}"
+sed -e 's/^export \(declare namespace\)/\1/' -- "${BUILD_DIR}/src/${BASENAME}.d.ts" > "${TYPES_DIR}/index.d.ts"
+
+# その他の .d.ts も移動(${BUILD_DIR}/src の下には .d.ts しかないはず).
+rm "${BUILD_DIR}/src/main.d.ts"
 rm "${BUILD_DIR}/src/${BASENAME}.d.ts"
+cp -r "${BUILD_DIR}/src"/* "${TYPES_DIR}"
+
 
 # 作業用ファイルなどを削除.
 rimraf "${OUT_MAIN}" "${BUILD_DIR}/src" "${BUILD_DIR}/test" "${BUILD_DIR}/src/main.js.map" 
