@@ -17,16 +17,16 @@
     "html"
   ],
   "files": [
-    "index.d.ts"
+    "types"
   ],
   "main": "",
   "type": "module",
-  "types": "index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "setup:clasp": "bash scripts/setup-clasp.sh && bash scripts/setup-clasprc.sh",
     "cleanup:clasp": "bash scripts/cleanup-clasp.sh",
     "clean": "npm run clean:build && npm run clean:test",
-    "clean:build": "rimraf index.d.ts build/*",
+    "clean:build": "rimraf types/* build/*",
     "clean:test": "rimraf test/build/*.spec.js",
     "build": "npm run clean:build && bash scripts/build.sh",
     "push": "bash scripts/clasp-with-auth.sh push --force",
