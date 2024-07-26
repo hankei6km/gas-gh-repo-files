@@ -1,4 +1,5 @@
 import JSZip from 'jszip'
+import type { JSZipObject } from 'jszip'
 import mime from 'mime'
 import chardet from 'chardet'
 import Url from 'url-parse'
@@ -146,10 +147,10 @@ export abstract class Client {
   /**
    * ファイルの種類を判定します。
    *
-   * @param {JSZip.JSZipObject} zipObj - JSZip オブジェクト。
+   * @param {JSZipObject} zipObj - JSZip オブジェクト。
    * @returns {Promise<FileKind>} - ファイルの種類を表す `FileKind` 列挙型の値を含むPromise。
    */
-  protected async fileKind(zipObj: JSZip.JSZipObject): Promise<FileKind> {
+  protected async fileKind(zipObj: JSZipObject): Promise<FileKind> {
     const filepath = zipObj.name
 
     const isImageFile = mime.getType(filepath)?.startsWith('image/')
