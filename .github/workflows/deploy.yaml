@@ -113,5 +113,5 @@ jobs:
         with:
           upload_url: ${{ github.event.release.upload_url }}
           asset_path: ./gh-repo-files.zip
-          asset_name: my-starter-gas-lib-ts.zip
+          asset_name: gh-repo-files.zip
           asset_content_type: application/zip
