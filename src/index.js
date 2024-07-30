@@ -22,7 +22,7 @@ function setImmediate(callback, ...args) {
  * @returns {function(new: GasClient)} GasClient クラスのコンストラクタ関数。
  */
 function getGasClient() {
-  return _entry_point_.GhRepoFiles.GasClient
+  return _entry_point_.GhRepoFiles.getGasClient()
 }
 // class GasClient extends _entry_point_.GhRepoFiles.GasClient {} // これは GAS でロードときに _entry_point_ がないのでエスポートされない。たぶん。
 

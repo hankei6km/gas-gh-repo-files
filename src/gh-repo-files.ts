@@ -61,6 +61,14 @@ export namespace GhRepoFiles {
       return new Uint8Array(res.getBlob().getBytes())
     }
   }
+  /**
+   * G asClient クラスのコンストラクタ関数を返します。
+   *
+   * @returns {function(new: GasClient)} GasClient クラスのコンストラクタ関数。
+   */
+  export function getGasClient(): typeof GasClient {
+    return GasClient
+  }
   async function filesToHHast(
     client: GhRepoFilesClient.Client
   ): Promise<Nodes> {
