@@ -24,13 +24,11 @@ cp LICENSE "${BUILD_DIR}/LICENSE.txt"
 
 # 型定義から良くない方法で export を外す(モジュールにしないため)
 # "${TYPES_DIR}"/index.d.ts へ移動.
+test -d "${TYPES_DIR}/lib" || mkdir -p "${TYPES_DIR}/lib"
 test -d "${TYPES_DIR}" || mkdir -p "${TYPES_DIR}"
-sed -e 's/^export \(declare namespace\)/\1/' -- "${BUILD_DIR}/src/${BASENAME}.d.ts" > "${TYPES_DIR}/index.d.ts"
+sed -e '1s|^.*$|/// <reference path="lib/client.d.ts"/>\n|' -e 's/^export \(declare namespace\)/\1/' -- "${BUILD_DIR}/src/${BASENAME}.d.ts" > "${TYPES_DIR}/index.d.ts"
+sed -e '1s|^.*$|/// <reference types="jszip" />\n|' -e 's/^export \(declare namespace\)/\1/' -- "${BUILD_DIR}/src/lib/client.d.ts" > "${TYPES_DIR}/lib/client.d.ts"
 
-# その他の .d.ts も移動(${BUILD_DIR}/src の下には .d.ts しかないはず).
-rm "${BUILD_DIR}/src/main.d.ts"
-rm "${BUILD_DIR}/src/${BASENAME}.d.ts"
-cp -r "${BUILD_DIR}/src"/* "${TYPES_DIR}"
 
 
 # 作業用ファイルなどを削除.

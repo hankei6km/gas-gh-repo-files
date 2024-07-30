@@ -1,7 +1,7 @@
 import { jest } from '@jest/globals'
 import * as fs from 'node:fs/promises'
-import { Client } from '../src/lib/client.js'
-import type { ClientOpts, FileList } from '../src/lib/client.js'
+import { GhRepoFilesClient } from '../src/lib/client.js'
+//import type { ClientOpts, FileList } from '../src/lib/client.js'
 import { GhRepoFiles } from '../src/gh-repo-files.js'
 
 describe('GhRepoFiles.GasClient', () => {
@@ -54,11 +54,11 @@ describe('GhRepoFiles.GasClient', () => {
 })
 
 describe('GhRepoFiles.toHtml()', () => {
-  class SimpleClient extends Client {
+  class SimpleClient extends GhRepoFilesClient.Client {
     protected fetch() {
       return fs.readFile('test/assets/test.zip')
     }
-    async getFileList(): Promise<FileList> {
+    async getFileList(): Promise<GhRepoFilesClient.FileList> {
       const fileList = await super.getFileList()
       fileList.sort((a, b) => a.name.localeCompare(b.name))
       return fileList
@@ -97,11 +97,11 @@ describe('GhRepoFiles.toHtml()', () => {
 })
 
 describe('GhRepoFiles.filesToMarkdown()', () => {
-  class SimpleClient extends Client {
+  class SimpleClient extends GhRepoFilesClient.Client {
     protected fetch() {
       return fs.readFile('test/assets/test.zip')
     }
-    async getFileList(): Promise<FileList> {
+    async getFileList(): Promise<GhRepoFilesClient.FileList> {
       const fileList = await super.getFileList()
       fileList.sort((a, b) => a.name.localeCompare(b.name))
       return fileList

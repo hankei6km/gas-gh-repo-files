@@ -7,7 +7,7 @@ import { sanitize, defaultSchema } from 'hast-util-sanitize'
 import { toMdast as hastToMdast } from 'hast-util-to-mdast'
 import { toMarkdown as mdastToMarkdown } from 'mdast-util-to-markdown'
 import { gfmToMarkdown } from 'mdast-util-gfm'
-import { Client } from './lib/client'
+import { GhRepoFilesClient } from './lib/client'
 
 /**
  * GitHub リポジトリのファイルを操作するためのユーティリティを提供します。
@@ -17,10 +17,10 @@ export namespace GhRepoFiles {
    * Google Apps Script 環境用の GitHub リポジトリクライアント。
    *
    * @remarks
-   * このクラスは、`Client` クラスを拡張し、Google Apps Script の `UrlFetchApp` を使用して
+   * このクラスは、`GhRepoFilesClient.Client` クラスを拡張し、Google Apps Script の `UrlFetchApp` を使用して
    * GitHub リポジトリからファイルをフェッチします。
    */
-  export class GasClient extends Client {
+  export class GasClient extends GhRepoFilesClient.Client {
     protected static isErrRes(
       res: GoogleAppsScript.URL_Fetch.HTTPResponse
     ): boolean {
@@ -61,7 +61,9 @@ export namespace GhRepoFiles {
       return new Uint8Array(res.getBlob().getBytes())
     }
   }
-  async function filesToHHast(client: Client): Promise<Nodes> {
+  async function filesToHHast(
+    client: GhRepoFilesClient.Client
+  ): Promise<Nodes> {
     const children: Child = []
     for (const o of await client.getFileList()) {
       children.push(h('h3', o.name))
@@ -94,20 +96,24 @@ export namespace GhRepoFiles {
   /**
    * GitHub リポジトリのファイルリストを HTML 形式の文字列に変換します。
    *
-   * @param {Client} client - GitHub リポジトリクライアント。
+   * @param {GhRepoFilesClient.Client} client - GitHub リポジトリクライアント。
    * @returns HTML 形式のファイルリストを表す文字列を解決する Promise。
    */
-  export async function filesToHtml(client: Client): Promise<string> {
+  export async function filesToHtml(
+    client: GhRepoFilesClient.Client
+  ): Promise<string> {
     return hastToHtml(await filesToHHast(client))
   }
 
   /**
    * GitHub リポジトリのファイルリストを Markdown 形式の文字列に変換します。
    *
-   * @param {Client} client - GitHub リポジトリクライアント。
+   * @param {GhRepoFilesClient.Client} client - GitHub リポジトリクライアント。
    * @returns Markdown 形式のファイルリストを表す文字列を解決する Promise。
    */
-  export async function filesToMarkdown(client: Client): Promise<string> {
+  export async function filesToMarkdown(
+    client: GhRepoFilesClient.Client
+  ): Promise<string> {
     return mdastToMarkdown(hastToMdast(await filesToHHast(client)), {
       extensions: [gfmToMarkdown()]
     })

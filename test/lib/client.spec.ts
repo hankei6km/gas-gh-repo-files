@@ -1,10 +1,10 @@
 import * as fs from 'node:fs/promises'
 import type JSZip from 'jszip'
-import { Client } from '../../src/lib/client.js'
-import type { ClientOpts } from '../../src/lib/client.js'
+import { GhRepoFilesClient } from '../../src/lib/client.js'
+//import type { ClientOpts } from '../../src/lib/client.js'
 import { TextEncoder } from 'util'
 
-class SimpleClient extends Client {
+class SimpleClient extends GhRepoFilesClient.Client {
   protected fetch() {
     return fs.readFile('test/assets/test.zip')
   }
