@@ -4,7 +4,7 @@ import { GhRepoFilesClient } from '../src/lib/client.js'
 //import type { ClientOpts, FileList } from '../src/lib/client.js'
 import { GhRepoFiles } from '../src/gh-repo-files.js'
 
-describe('GhRepoFiles.GasClient', () => {
+describe('GhRepoFiles.getGasClient', () => {
   const saveUrlFetchApp = global.UrlFetchApp
   afterEach(() => {
     global.UrlFetchApp = saveUrlFetchApp
@@ -21,7 +21,7 @@ describe('GhRepoFiles.GasClient', () => {
     global.UrlFetchApp = {
       fetch: mockfetch
     } as any
-    const client = new GhRepoFiles.GasClient({
+    const client = new (GhRepoFiles.getGasClient())({
       owner: 'hankei6km',
       repo: 'gas-gh-repo-files'
     })
@@ -43,7 +43,7 @@ describe('GhRepoFiles.GasClient', () => {
     global.UrlFetchApp = {
       fetch: mockfetch
     } as any
-    const client = new GhRepoFiles.GasClient({
+    const client = new (GhRepoFiles.getGasClient())({
       owner: 'hankei6km',
       repo: 'gas-gh-repo-files'
     })
