@@ -38,8 +38,8 @@
     "lint:type-check": "tsc --noEmit"
   },
   "dependencies": {
+    "@types/hast": "^3.0.4",
     "chardet": "^2.0.0",
-    "hast": "^1.0.0",
     "hast-util-raw": "^9.0.2",
     "hast-util-sanitize": "^5.0.1",
     "hast-util-to-html": "^9.0.1",
