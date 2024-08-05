@@ -41,6 +41,30 @@ describe('Client', () => {
       'owner: hankei6km, repo: gas-gh-repo-files, ref: develop, host: github.co.jp, rawContentHost: raw.github.co.jp'
     )
   })
+  it('info(blank)', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files',
+      ref: '',
+      host: '',
+      rawContentHost: ''
+    })
+    expect(client.info).toBe(
+      'owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com'
+    )
+  })
+  it('info(blank)', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files',
+      ref: undefined,
+      host: undefined,
+      rawContentHost: undefined
+    })
+    expect(client.info).toBe(
+      'owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com'
+    )
+  })
   it('documentName', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',

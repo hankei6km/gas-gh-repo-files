@@ -59,12 +59,22 @@ export namespace GhRepoFilesClient {
   export type FileList = FileInfo[]
 
   function normalizeClientOpts(opts: ClientOpts): ClientNomalizedOpts {
+    const t = { ...opts }
+    if (t.ref === undefined || t.ref === '') {
+      delete t.ref
+    }
+    if (t.host === undefined || t.host === '') {
+      delete t.host
+    }
+    if (t.rawContentHost === undefined || t.rawContentHost === '') {
+      delete t.rawContentHost
+    }
     // バリデーションは？
     return {
       ref: 'main',
       host: 'github.com',
       rawContentHost: 'raw.githubusercontent.com',
-      ...opts
+      ...t
     }
   }
 
