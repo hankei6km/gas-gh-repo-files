@@ -72,6 +72,14 @@ describe('Client', () => {
     })
     expect(client.documentName).toBe('hankei6km gas-gh-repo-files main')
   })
+  it('documentName(slash)', () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files',
+      ref: 'topic/slash'
+    })
+    expect(client.documentName).toBe('hankei6km gas-gh-repo-files topic slash')
+  })
   it('title', () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
