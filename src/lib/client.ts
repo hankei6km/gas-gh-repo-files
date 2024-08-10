@@ -96,6 +96,7 @@ export namespace GhRepoFilesClient {
   export abstract class Client {
     protected _opts: ClientNomalizedOpts
     protected _description: string | undefined = ''
+    protected _slashReplacementCharinDocumentName: string = ' '
     constructor(opts: ClientOpts) {
       this._opts = normalizeClientOpts(opts)
     }
@@ -125,7 +126,11 @@ export namespace GhRepoFilesClient {
      * @returns {string} - ドキュメント名を表す文字列。
      */
     get documentName(): string {
-      return `${this._opts.owner} ${this._opts.repo} ${this._opts.ref}`
+      // new RegExp しておく？(とくに効率が必要な処理でもないか？)
+      return `${this._opts.owner} ${this._opts.repo} ${this._opts.ref.replace(
+        /\//g,
+        this._slashReplacementCharinDocumentName
+      )}`
     }
 
     /**
