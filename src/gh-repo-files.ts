@@ -74,7 +74,7 @@ export namespace GhRepoFiles {
    * @param {GhRepoFilesClient.Client} client - GitHub リポジトリクライアント。
    * @returns  hast 形式のファイルリストを表すオブジェクトを解決する Promise。
    */
-  export async function filesToHHast(
+  export async function filesToHast(
     client: GhRepoFilesClient.Client
   ): Promise<import('hast').Nodes> {
     const children: Child = []
@@ -115,7 +115,7 @@ export namespace GhRepoFiles {
   export async function filesToHtml(
     client: GhRepoFilesClient.Client
   ): Promise<string> {
-    return hastToHtml(await filesToHHast(client))
+    return hastToHtml(await filesToHast(client))
   }
 
   /**
@@ -127,7 +127,7 @@ export namespace GhRepoFiles {
   export async function filesToMarkdown(
     client: GhRepoFilesClient.Client
   ): Promise<string> {
-    return mdastToMarkdown(hastToMdast(await filesToHHast(client)), {
+    return mdastToMarkdown(hastToMdast(await filesToHast(client)), {
       extensions: [gfmToMarkdown()]
     })
   }
