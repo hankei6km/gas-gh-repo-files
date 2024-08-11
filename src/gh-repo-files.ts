@@ -1,7 +1,6 @@
 import Url from 'url-parse'
 import { h } from 'hastscript'
 import type { Child } from 'hastscript'
-import type { Nodes } from 'hast'
 import { toHtml as hastToHtml } from 'hast-util-to-html'
 import { sanitize, defaultSchema } from 'hast-util-sanitize'
 import { toMdast as hastToMdast } from 'hast-util-to-mdast'
@@ -69,9 +68,15 @@ export namespace GhRepoFiles {
   export function getGasClient(): typeof GasClient {
     return GasClient
   }
-  async function filesToHHast(
+  /**
+   * GitHub リポジトリのファイルリストを hast 形式のオブジェクトに変換します。
+   *
+   * @param {GhRepoFilesClient.Client} client - GitHub リポジトリクライアント。
+   * @returns  hast 形式のファイルリストを表すオブジェクトを解決する Promise。
+   */
+  export async function filesToHHast(
     client: GhRepoFilesClient.Client
-  ): Promise<Nodes> {
+  ): Promise<import('hast').Nodes> {
     const children: Child = []
     for (const o of await client.getFileList()) {
       children.push(h('h3', o.name))
