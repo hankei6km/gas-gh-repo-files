@@ -71,12 +71,12 @@ describe('GhRepoFiles.toHtml()', () => {
       repo: 'gas-gh-repo-files'
     })
     expect(await GhRepoFiles.filesToHtml(client)).toMatchInlineSnapshot(`
-"<div><h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
+"<h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
 
 \`\`\`html
 &#x3C;p>テスト&#x3C;/p>
 \`\`\`
-</code></pre><h3>test.bin</h3><p>binary</p></div>"
+</code></pre><h3>test.bin</h3><p>binary</p>"
 `)
   })
   it('should return html(description)', async () => {
@@ -86,12 +86,12 @@ describe('GhRepoFiles.toHtml()', () => {
     })
     client.description = 'test'
     expect(await GhRepoFiles.filesToHtml(client)).toMatchInlineSnapshot(`
-"<div><h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><p>test</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
+"<h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><p>test</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
 
 \`\`\`html
 &#x3C;p>テスト&#x3C;/p>
 \`\`\`
-</code></pre><h3>test.bin</h3><p>binary</p></div>"
+</code></pre><h3>test.bin</h3><p>binary</p>"
 `)
   })
 })

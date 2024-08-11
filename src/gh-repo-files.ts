@@ -95,7 +95,7 @@ export namespace GhRepoFiles {
       return []
     })()
     return sanitize(
-      h('div', [
+      h(null, [
         h('h1', client.title),
         h('p', client.info),
         ...description,
