@@ -79,6 +79,21 @@ describe('GhRepoFiles.toHtml()', () => {
 </code></pre><h3>test.bin</h3><p>binary</p>"
 `)
   })
+  it('should return html(hast)', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files'
+    })
+    const h = await GhRepoFiles.filesToHast(client)
+    expect(await GhRepoFiles.hastToHtml(h)).toMatchInlineSnapshot(`
+"<h1>hankei6km/gas-gh-repo-files/main</h1><p>owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw.githubusercontent.com</p><h2>files</h2><h3>images/hiragana.png</h3><img src="https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png"><h3>README.txt</h3><pre><code>テストに使う zip に追加されるディレクトリ
+
+\`\`\`html
+&#x3C;p>テスト&#x3C;/p>
+\`\`\`
+</code></pre><h3>test.bin</h3><p>binary</p>"
+`)
+  })
   it('should return html(description)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
@@ -114,6 +129,39 @@ describe('GhRepoFiles.filesToMarkdown()', () => {
       repo: 'gas-gh-repo-files'
     })
     expect(await GhRepoFiles.filesToMarkdown(client)).toMatchInlineSnapshot(`
+"# hankei6km/gas-gh-repo-files/main
+
+owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw\\.githubusercontent.com
+
+## files
+
+### images/hiragana.png
+
+![](https://raw.githubusercontent.com/hankei6km/gas-gh-repo-files/main/images/hiragana.png)
+
+### README.txt
+
+\`\`\`\`
+テストに使う zip に追加されるディレクトリ
+
+\`\`\`html
+<p>テスト</p>
+\`\`\`
+\`\`\`\`
+
+### test.bin
+
+binary
+"
+`)
+  })
+  it('should return markdown(hast)', async () => {
+    const client = new SimpleClient({
+      owner: 'hankei6km',
+      repo: 'gas-gh-repo-files'
+    })
+    const h = await GhRepoFiles.filesToHast(client)
+    expect(GhRepoFiles.hastToMarkdown(h)).toMatchInlineSnapshot(`
 "# hankei6km/gas-gh-repo-files/main
 
 owner: hankei6km, repo: gas-gh-repo-files, ref: main, host: github.com, rawContentHost: raw\\.githubusercontent.com
