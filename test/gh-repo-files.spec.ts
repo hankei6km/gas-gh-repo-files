@@ -108,7 +108,7 @@ describe('GhRepoFiles.filesToMarkdown()', () => {
     }
   }
 
-  it('should return html', async () => {
+  it('should return markdown', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
       repo: 'gas-gh-repo-files'
@@ -140,7 +140,7 @@ binary
 "
 `)
   })
-  it('should return html(description)', async () => {
+  it('should return markdown(description)', async () => {
     const client = new SimpleClient({
       owner: 'hankei6km',
       repo: 'gas-gh-repo-files'
