@@ -1,10 +1,10 @@
 import Url from 'url-parse'
 import { h } from 'hastscript'
 import type { Child } from 'hastscript'
-import { toHtml as hastToHtml } from 'hast-util-to-html'
+import { toHtml } from 'hast-util-to-html'
 import { sanitize, defaultSchema } from 'hast-util-sanitize'
 import { toMdast as hastToMdast } from 'hast-util-to-mdast'
-import { toMarkdown as mdastToMarkdown } from 'mdast-util-to-markdown'
+import { toMarkdown } from 'mdast-util-to-markdown'
 import { gfmToMarkdown } from 'mdast-util-gfm'
 import { GhRepoFilesClient } from './lib/client'
 
@@ -107,6 +107,18 @@ export namespace GhRepoFiles {
   }
 
   /**
+   * hast 形式のオブジェクトを HTML 形式の文字列に変換します。
+   *
+   * @param {Awaited<ReturnType<typeof filesToHast>>} hast - hast 形式のオブジェクト。
+   * @returns HTML 形式の文字列
+   */
+  export function hastToHtml(
+    hast: Awaited<ReturnType<typeof filesToHast>>
+  ): string {
+    return toHtml(hast)
+  }
+
+  /**
    * GitHub リポジトリのファイルリストを HTML 形式の文字列に変換します。
    *
    * @param {GhRepoFilesClient.Client} client - GitHub リポジトリクライアント。
@@ -119,6 +131,20 @@ export namespace GhRepoFiles {
   }
 
   /**
+   * hast 形式のオブジェクトを Markdown 形式の文字列に変換します。
+   *
+   * @param {Awaited<ReturnType<typeof filesToHast>>} hast - hast 形式のオブジェクト。
+   * @returns Markdown 形式の文字列
+   */
+  export function hastToMarkdown(
+    hast: Awaited<ReturnType<typeof filesToHast>>
+  ): string {
+    return toMarkdown(hastToMdast(hast), {
+      extensions: [gfmToMarkdown()]
+    })
+  }
+
+  /**
    * GitHub リポジトリのファイルリストを Markdown 形式の文字列に変換します。
    *
    * @param {GhRepoFilesClient.Client} client - GitHub リポジトリクライアント。
@@ -127,8 +153,6 @@ export namespace GhRepoFiles {
   export async function filesToMarkdown(
     client: GhRepoFilesClient.Client
   ): Promise<string> {
-    return mdastToMarkdown(hastToMdast(await filesToHast(client)), {
-      extensions: [gfmToMarkdown()]
-    })
+    return hastToMarkdown(await filesToHast(client))
   }
 }
