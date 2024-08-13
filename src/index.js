@@ -42,7 +42,7 @@ async function filesToHast(client) {
  * @param {Awaited<ReturnType<typeof filesToHast>>} hast - hast 形式のオブジェクト。
  * @returns HTML 形式の文字列
  */
-export function hastToHtml(hast) {
+function hastToHtml(hast) {
   return _entry_point_.GhRepoFiles.hastToHtml(hast)
 }
 /**
