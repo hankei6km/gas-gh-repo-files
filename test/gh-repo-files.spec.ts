@@ -55,8 +55,8 @@ describe('GhRepoFiles.getGasClient', () => {
 
 describe('GhRepoFiles.toHtml()', () => {
   class SimpleClient extends GhRepoFilesClient.Client {
-    protected fetch() {
-      return fs.readFile('test/assets/test.zip')
+    protected async fetch(): Promise<Uint8Array> {
+      return new Uint8Array(await fs.readFile('test/assets/test.zip'))
     }
     async getFileList(): Promise<GhRepoFilesClient.FileList> {
       const fileList = await super.getFileList()
@@ -113,8 +113,8 @@ describe('GhRepoFiles.toHtml()', () => {
 
 describe('GhRepoFiles.filesToMarkdown()', () => {
   class SimpleClient extends GhRepoFilesClient.Client {
-    protected fetch() {
-      return fs.readFile('test/assets/test.zip')
+    protected async fetch(): Promise<Uint8Array> {
+      return new Uint8Array(await fs.readFile('test/assets/test.zip'))
     }
     async getFileList(): Promise<GhRepoFilesClient.FileList> {
       const fileList = await super.getFileList()

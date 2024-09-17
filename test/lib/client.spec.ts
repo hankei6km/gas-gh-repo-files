@@ -5,8 +5,8 @@ import { GhRepoFilesClient } from '../../src/lib/client.js'
 import { TextEncoder } from 'util'
 
 class SimpleClient extends GhRepoFilesClient.Client {
-  protected fetch() {
-    return fs.readFile('test/assets/test.zip')
+  protected async fetch(): Promise<Uint8Array> {
+    return new Uint8Array(await fs.readFile('test/assets/test.zip'))
   }
 }
 
